@@ -31,26 +31,27 @@ def find_hist_vol(prices, period=30):
 
     return hist_vol
 
-# Inputs (user enter inputs here)
-period = [10, 30]
-currencies = ['ETH-USD', 'BTC-USD', 'MATIC-USD']
+if __name__ == "__main__":
+    # Inputs (user enter inputs here)
+    period = [7, 10, 15]
+    currencies = ['BTC-USD']
 
-# Plot graphs
-plt.figure(figsize=(8, 6))
-plt.xlabel('Dates')
-plt.ylabel('Realized Volatility')
+    # Plot graphs
+    plt.figure(figsize=(8, 6))
+    plt.xlabel('Dates')
+    plt.ylabel('Realized Volatility')
 
-for currency in currencies:
-    df = web.DataReader(currency, 'yahoo')
-    df = df.sort_values(by=['Date'], ascending=False)
+    for currency in currencies:
+        df = web.DataReader(currency, 'yahoo')
+        df = df.sort_values(by=['Date'], ascending=False)
 
-    # Convert dates to date time format
-    dates = df.index
-    close_prices = df['Close'].to_numpy()
+        # Convert dates to date time format
+        dates = df.index
+        close_prices = df['Close'].to_numpy()
 
-    for i in period:
-        plt.plot(dates[:-i], find_hist_vol(close_prices, i), label=f'{currency} {i} Days')
+        for i in period:
+            plt.plot(dates[:-i], find_hist_vol(close_prices, i), label=f'{currency} {i} Days')
 
-plt.grid()
-plt.legend()
-plt.show()
+    plt.grid()
+    plt.legend()
+    plt.show()
